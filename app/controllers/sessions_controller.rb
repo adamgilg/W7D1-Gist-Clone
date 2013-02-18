@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:token] = nil
     current_user.delete_token
+    session[:token] = nil
+    redirect_to root_url
   end
 end
