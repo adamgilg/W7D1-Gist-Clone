@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def require_login
     unless logged_in?
       flash[:error] = "please log in"
@@ -8,7 +7,6 @@ module ApplicationHelper
   end
 
   def logged_in?
-    puts current_user
     !!current_user
   end
 

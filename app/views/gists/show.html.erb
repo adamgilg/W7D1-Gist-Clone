@@ -1,0 +1,6 @@
+<%= @gist.title %>
+<br>
+added by
+<%= @gist.user.user_name %>
+<br>
+<%= time_ago_in_words(@gist.created_at) %> ago

@@ -8,4 +8,8 @@ class GistsController < ApplicationController
 
   def create
   end
+
+  def show
+    @gist = Gist.find(params[:id])
+  end
 end
