@@ -2,8 +2,8 @@ module ApplicationHelper
 
   def require_login
     unless logged_in?
-      flash[:error] = "not logged in"
-      redirect_to root_path
+      flash[:error] = "please log in"
+      redirect_to new_sessions_path
     end
   end
 
