@@ -22,6 +22,14 @@ added by
         id: "unfavorite-button",
         hidden: !@gist.favorited?(current_user)) %>
 
+<hr>
+<h2>Gist Files</h2>
+<% @gist.gist_files.each do |gf| %>
+  <h3>Body:</h3>
+  <%= gf.body %>
+<% end %>
+
+
 <script>
   $(function(){
 

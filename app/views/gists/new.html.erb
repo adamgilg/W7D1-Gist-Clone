@@ -1,8 +1,21 @@
 <h1>CREAT NEW GEEST</h1>
 <%= simple_form_for @gist do |f| %>
   <%= f.input :title %>
-  <%= f.simple_fields_for :gist_files do |gf| %>
-    <%= gf.input :body, as: :text %>
+
+  <h2>GEEST FILES</h2>
+  <%= f.simple_fields_for :gist_files, :id => "shiz" do |gf| %>
+    <div class="gist-file-form">
+      <%= gf.input :body, as: :text %>
+      <p>
+        <a class="remove-gist-file-form">Remove</a>
+      </p>
+      <hr >
+    </div>
   <% end %>
   <%= f.button :submit %>
 <% end %>
+<script>
+  $(".remove-gist-file-form").click(function(){
+    $(this).parent().parent().remove();
+  });
+</script>

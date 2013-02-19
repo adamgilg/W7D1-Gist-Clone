@@ -1,6 +1,8 @@
 class GistFile < ActiveRecord::Base
   attr_accessible :body, :gist_id
 
-  belongs_to :gist
+  validates :gist, presence: true
+
+  belongs_to :gist, inverse_of: :gist_files
 
 end
