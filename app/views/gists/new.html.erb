@@ -1,2 +1,8 @@
-<h1>Gists#new</h1>
-<p>Find me in app/views/gists/new.html.erb</p>
+<h1>CREAT NEW GEEST</h1>
+<%= simple_form_for @gist do |f| %>
+  <%= f.input :title %>
+  <%= f.simple_fields_for :gist_files do |gf| %>
+    <%= gf.input :body, as: :text %>
+  <% end %>
+  <%= f.button :submit %>
+<% end %>
