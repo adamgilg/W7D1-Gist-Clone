@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       redirect_to root_url
     else
       flash[:error] = "Invalid login!"
-      render new_sessions_path
+      render new_session_path
     end
   end
 

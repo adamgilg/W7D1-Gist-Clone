@@ -4,3 +4,35 @@ added by
 <%= @gist.user.user_name %>
 <br>
 <%= time_ago_in_words(@gist.created_at) %> ago
+<br>
+
+<%= button_to('Favorite',
+        gist_favorite_path(@gist),
+        method: "post",
+        remote: true,
+        form_class: "favorite-gist",
+        id: "favorite-button",
+        hidden: @gist.favorited?(current_user)) %>
+
+<%= button_to('Unfavorite',
+        gist_favorite_path(@gist),
+        method: "delete",
+        remote: true,
+        form_class: "favorite-gist",
+        id: "unfavorite-button",
+        hidden: !@gist.favorited?(current_user)) %>
+
+<script>
+  $(function(){
+
+    $(".favorite-gist").on("ajax:success", function(event, data, status, xhr) {
+      $("#favorite-button").toggle();
+      $("#unfavorite-button").toggle();
+    });
+
+    $(".favorite-gist").on("ajax:error", function(event, xhr, status, error) {
+      // $("#favorite-button").show();
+      // $("#unfavorite-button").hide();
+    });
+  });
+</script>

@@ -1,7 +1,11 @@
 GistClone::Application.routes.draw do
-  resource :sessions
+  resource :session, :only => [:create, :destroy, :new]
   resources :users
-  resources :gists
+  resources :favorites, :only => [:index]
+
+  resources :gists do
+    resource :favorite, :only => [:create, :destroy]
+  end
 
   root to: 'gists#index'
 end
