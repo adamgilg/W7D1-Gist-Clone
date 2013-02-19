@@ -31,6 +31,7 @@ added by
 <% end %>
 
 <h3>Tags</h3>
+<div id="tag-box"></div>
 <div class="tag-form">
   <%= simple_form_for(@gist, :method => :put) do |f| %>
     <%= f.input :tag_ids,
@@ -51,8 +52,64 @@ added by
     });
 
     $(".favorite-gist").on("ajax:error", function(event, xhr, status, error) {
-      // $("#favorite-button").show();
-      // $("#unfavorite-button").hide();
+      console.log("Something went wrong");
     });
+
+    function TextSearchSelect(div, items){
+      var div = $(div);
+      var input = $("<input>");
+
+      div.append(input);
+
+      function generatedListElements(listItems){
+        var ul = $("<ul>");
+
+        $.each(listItems, function(){
+          var li = $('<li>');
+          li.text(this);
+          ul.append(li);
+        });
+
+        return ul;
+      }
+
+      function filterList(inputValue){
+        var filteredList = [];
+        var filter = new RegExp(inputValue);
+
+        $.each(items, function(){
+          if (filter.exec(this)){
+            filteredList.push(this);
+          }
+        });
+        return filteredList;
+      }
+
+      function removeList(){
+        div.find("ul").remove();
+      }
+
+      function addList(listItems){
+        div.append(generatedListElements(listItems));
+      }
+
+      input.focus(function() {
+        addList(items);
+      });
+
+      input.blur(function() {
+        removeList()
+      });
+
+      input.on("keyup", function(){
+        removeList();
+        addList(filterList(input.val()));
+      });
+
+    }
+
+
+    var tagBox = new TextSearchSelect('#tag-box', ["Funky", "Fresh", "Atrocious"]);
   });
 </script>
+
