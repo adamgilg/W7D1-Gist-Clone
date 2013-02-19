@@ -31,14 +31,14 @@ added by
 <% end %>
 
 <h3>Tags</h3>
-<div id="tag-box"></div>
+<div class="tag-list">
+  <% @gist.tags.each do |tag| %>
+    <%= tag.name %>
+  <% end %>
 <div class="tag-form">
   <%= simple_form_for(@gist, :method => :put) do |f| %>
-    <%= f.input :tag_ids,
-                collection: Tag.all,
-                label_method: :name,
-                value_method: :id,
-                as: :check_boxes %>
+    <div id="tag-box"></div>
+
     <%= f.button :submit %>
   <% end %>
 </div>
@@ -65,8 +65,17 @@ added by
         var ul = $("<ul>");
 
         $.each(listItems, function(){
+          var that = this;
           var li = $('<li>');
-          li.text(this);
+          li.text(this.name);
+          // click event on li
+          li.on("click", function(){
+            var hiddenInput = $('<input>').attr('type','hidden');
+            hiddenInput.attr("name", "gist[tag_ids][]");
+            hiddenInput.val(that.id);
+            $(div).parent().append(hiddenInput);
+            $(this).addClass("under-bold");
+          });
           ul.append(li);
         });
 
@@ -78,7 +87,7 @@ added by
         var filter = new RegExp(inputValue);
 
         $.each(items, function(){
-          if (filter.exec(this)){
+          if (filter.exec(this.name)){
             filteredList.push(this);
           }
         });
@@ -98,7 +107,10 @@ added by
       });
 
       input.blur(function() {
-        removeList()
+        setTimeout(function() {
+          removeList();
+        }, 2500);
+
       });
 
       input.on("keyup", function(){
@@ -108,8 +120,9 @@ added by
 
     }
 
-
-    var tagBox = new TextSearchSelect('#tag-box', ["Funky", "Fresh", "Atrocious"]);
+    var tags = $.getJSON('<%= gist_path(@gist)%>.json', function(data){
+      var tagBox = new TextSearchSelect('#tag-box', data);
+    });
   });
 </script>
 

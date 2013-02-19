@@ -22,11 +22,19 @@ class GistsController < ApplicationController
 
   def show
     @gist = Gist.find(params[:id])
+    respond_to do |format|
+      format.json { render json: Tag.all }
+      format.html
+    end
   end
 
   def update
     @gist = Gist.find(params[:id])
-    @gist.update_attributes(params[:gist])
+    tag_ids = @gist.tag_ids
+    tags = (params[:gist][:tag_ids] + tag_ids).uniq
+    @gist.tag_ids = tags
+    # @gist.update_attributes(params[:gist])
+    @gist.save
     redirect_to @gist
   end
 end

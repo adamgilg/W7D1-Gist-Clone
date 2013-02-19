@@ -12,3 +12,12 @@
  *= require_tree .
  */
 @import "bootstrap";
+
+.under-bold {
+  list-style-type: disc;
+  color: fuchsia;
+}
+
+li {
+  list-style-type: circle;
+}
