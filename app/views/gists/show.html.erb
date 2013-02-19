@@ -24,11 +24,23 @@ added by
 
 <hr>
 <h2>Gist Files</h2>
+
 <% @gist.gist_files.each do |gf| %>
   <h3>Body:</h3>
   <%= gf.body %>
 <% end %>
 
+<h3>Tags</h3>
+<div class="tag-form">
+  <%= simple_form_for(@gist, :method => :put) do |f| %>
+    <%= f.input :tag_ids,
+                collection: Tag.all,
+                label_method: :name,
+                value_method: :id,
+                as: :check_boxes %>
+    <%= f.button :submit %>
+  <% end %>
+</div>
 
 <script>
   $(function(){

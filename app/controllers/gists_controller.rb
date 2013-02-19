@@ -5,7 +5,7 @@ class GistsController < ApplicationController
 
   def new
     @gist = Gist.new
-    3.times { @gist.gist_files.build }
+    @gist.gist_files.build
   end
 
   def create
@@ -22,5 +22,11 @@ class GistsController < ApplicationController
 
   def show
     @gist = Gist.find(params[:id])
+  end
+
+  def update
+    @gist = Gist.find(params[:id])
+    @gist.update_attributes(params[:gist])
+    redirect_to @gist
   end
 end
