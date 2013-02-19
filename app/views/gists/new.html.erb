@@ -3,19 +3,35 @@
   <%= f.input :title %>
 
   <h2>GEEST FILES</h2>
-  <%= f.simple_fields_for :gist_files, :id => "shiz" do |gf| %>
-    <div class="gist-file-form">
-      <%= gf.input :body, as: :text %>
-      <p>
-        <a class="remove-gist-file-form">Remove</a>
-      </p>
-      <hr >
-    </div>
-  <% end %>
+  <div class="gist-file-forms">
+    <%= f.simple_fields_for :gist_files, :id => "shiz" do |gf| %>
+      <div class="gist-file-form">
+        <%= gf.input :body, as: :text %>
+        <p>
+          <a class="remove-gist-file-form">Remove</a>
+        </p>
+        <hr >
+      </div>
+    <% end %>
+  </div>
   <%= f.button :submit %>
 <% end %>
+
+<a href="#" class="add-file-button">Add File</a>
+
 <script>
+$(function() {
   $(".remove-gist-file-form").click(function(){
     $(this).parent().parent().remove();
   });
+
+  $(".add-file-button").click(function(){
+    var clonedGistFileForm = $(".gist-file-form").last().clone(true);
+    var time = new Date().getTime();
+    var textArea = $(clonedGistFileForm).find("textarea");
+    $(textArea).attr("name", "gist[gist_files_attributes]["+time+"][body]");
+    $(clonedGistFileForm).appendTo(".gist-file-forms");
+  });
+});
+
 </script>
